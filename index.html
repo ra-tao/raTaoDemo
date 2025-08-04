@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>人机验证</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>人机验证</h1>
+<div id="mathProblem"></div>
+<input type="number" id="userAnswer" placeholder="输入答案">
+<button onclick="checkAnswer()">提交答案</button>
+
+<script>
+    function generateProblem() {
+        const num1 = Math.floor(Math.random() * 90) + 10; // 10-99
+        const num2 = Math.floor(Math.random() * 90) + 10; // 10-99
+        const operator = Math.random() < 0.5 ? '+' : '-';
+        
+        if (operator === '-' && num1 < num2) {
+            [num1, num2] = [num2, num1];
+        }
+
+        document.getElementById('mathProblem').textContent = 
+            `${num1} ${operator} ${num2} = ?`;
+        
+        return operator === '+' ? num1 + num2 : num1 - num2;
+    }
+
+    let correctAnswer = generateProblem();
+
+    function checkAnswer() {
+        const userInput = parseInt(document.getElementById('userAnswer').value);
+        
+        if (userInput === correctAnswer) {
+            window.location.href = 'http://13.114.188.109/';
+        } else {
+            alert('答案错误，请重试！');
+            document.getElementById('userAnswer').value = '';
+            correctAnswer = generateProblem();
+        }
+    }
+</script>
+</body>
+</html>
